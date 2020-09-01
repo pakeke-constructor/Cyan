@@ -79,7 +79,7 @@ local function newComponent(comp_name)
     if compbitbase_shiftnum > max_shiftnum then
         
         -- TODO::  make this automatically turn off bitops instead of raising error.
-        return error("Too many components. (over "..tostring(max_shiftnum)..") Use cyan.useBitops(false)\n(or reduce the number of components you are using.)")
+        return error("Too many components. (over "..tostring(max_shiftnum)..") please reduce the number of components you are using.")
     
     end
     System.component_bits[comp_name] = bit.tobit(compbitbase)
