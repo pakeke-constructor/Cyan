@@ -2,8 +2,8 @@
 
 
 # Cyan
-
-Cyan is a lightweight ECS library built for LOVE.
+### Warning: As of 01/09/2020, This library has not been heavily tested. Use at own risk!
+Cyan is a lightweight ECS library built for lua, inspired from Concord and other ECS libs.
 
 It is designed to have a very minimalistic and intuitive API whilst having time complexities among the best ECS libaries out there.
 
@@ -22,7 +22,7 @@ local cyan = require "(path to cyan folder).Cyan.cyan"
 This tutorial assumes you know the basics of ECS.
 If you don't, there are plenty of great online resources.
 
-### Entities:
+# Entities:
 
 Entities hold data.
 They are basically a glorified lua table.
@@ -51,7 +51,7 @@ ent:delete()
  
  
       
-### Systems:
+# Systems:
 Systems is where logic is held.
 It is also where the entities belong.
 
@@ -88,7 +88,7 @@ end
  
    
    
-###  Calling system functions
+##  Calling functions / emitting events:
 ```lua
 --  To call functions in Cyan systems, use
 --  " Cyan.call "
