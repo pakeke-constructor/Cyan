@@ -32,13 +32,9 @@ They are basically a glorified lua table.
 local ent = cyan.Entity()
 
 
-ent.position = { x=10, y=10 } -- adds "position" component
-
-                        -- same as ent:add("position", {x=10, y=10})
-
-
--- components don't have to be tables:
-ent.health = 50
+ent:add("position", {x = 1,  y = 2})  -- adds position component.
+                                      -- same as:   ent.position = {x = 1, y = 2}
+                                      -- (note: components do not have to be tables)
 
 
 ent:remove("health") -- removes component 'health'
