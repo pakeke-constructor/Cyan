@@ -1,7 +1,7 @@
 
 
 - Entity:remove() and Entity:rawremove() do not demodify bitwise component mask.
-Fix is to do bitwise not on individual mask of component, and bit.band the result with the entity mask to remove that component's bit.
+Fix is to do bitwise-not on individual mask of component, and bit.band the result with the entity mask to remove that component's bit.
 
 This really needs fixing!!!
 
