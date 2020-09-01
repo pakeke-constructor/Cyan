@@ -37,7 +37,7 @@ ent:add("position", {x = 1,  y = 2})  -- adds position component.
                                       -- (note: components do not have to be tables)
 
 
-ent:remove("health") -- removes component 'health'
+ent:remove("position") -- removes component 'position'
 
 
 -- Marks entity for deletion (will be deleted next frame)
