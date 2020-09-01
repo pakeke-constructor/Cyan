@@ -15,7 +15,7 @@ I mainly built this for personal use. Check out Concord, Nata, or HOOECS if you 
 ```lua
 
 -- importing:
-local cyan = require "(path to cyan folder).Cyan.cyan"
+local cyan = require "(path to cyan folder).Cyan.Cyan"
 
 ```
 
