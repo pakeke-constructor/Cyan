@@ -67,6 +67,8 @@ function DrawSys:draw()
     for _, ent in ipairs(self.group) do -- iterates over all entities
         draw( ent )
     end
+    
+    ImageBatch:draw()
 end
 
 
