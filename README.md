@@ -65,20 +65,23 @@ local DrawSys = cyan.System( "image", "position" )
 -- Example:
 function DrawSys:draw()
     for _, ent in ipairs(self.group) do -- iterates over all entities
-        love.graphics.draw(ent.image, ent.position.x, ent.position.y)
+        draw( ent )
     end
 end
 
 
-
--- Another example
-function DrawSys:update(dt)
-    for _, ent in ipairs(self.group) do
-        -- Do something to do with entity Z indexing or something, idk
-    end
+```
+There are also callbacks for entities being added and removed from systems,
+called :added and :removed. The entity is the first argument
+```lua
+function DrawSys:added( entity )
+  ImageBatch:add( entity )
 end
 
 
+function DrawSys:removed( entity )
+  ImageBatch:remove( entity )
+end
 
 ```
  
