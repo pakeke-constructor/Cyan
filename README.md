@@ -107,7 +107,7 @@ end
 
 ```
 
-# Optional ease of use:
+# Other functions:  (OPTIONAL)
 Here are some tips that provide extra functionality, but are
 entirely optional.
    
@@ -150,7 +150,7 @@ Sys:add(entity)
 
 ```
 
-# *Final notes*
+# *Final notes*  (OPTIONAL)
 
 This library is not meant to be used as a barebones library. 
 
