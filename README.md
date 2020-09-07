@@ -2,7 +2,7 @@
 
 
 # Cyan
-### Warning: As of 01/09/2020, This library has not been heavily tested. Use at own risk!
+#### Warning: This library has minor bugs. You can view them in `BUGS_AND_FIXES.txt` 
 Cyan is a lightweight ECS library built for lua, inspired from Concord and other ECS libs.
 
 It is designed to have a very minimalistic and intuitive API whilst having time complexities among the best ECS libaries out there.
