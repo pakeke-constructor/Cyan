@@ -65,7 +65,7 @@ local DrawSys = cyan.System( "image", "position" )
 -- This table is read only!!! Do NOT modify it!
 -- Example:
 function DrawSys:draw()
-    for _, ent in ipairs(self.group) do -- iterates over all entities
+    for _, ent in ipairs(self.group) do -- iterates over all entities in `DrawSys`
         draw( ent )
     end
 end
