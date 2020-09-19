@@ -62,13 +62,12 @@ local DrawSys = cyan.System( "image", "position" )
 
 
 -- Access system entities using `System.group`.
+-- This table is read only!!! Do NOT modify it!
 -- Example:
 function DrawSys:draw()
     for _, ent in ipairs(self.group) do -- iterates over all entities
         draw( ent )
     end
-    
-    ImageBatch:draw()
 end
 
 
