@@ -60,8 +60,10 @@ do
 
             @return Cyan @
         ]]
-        
-        for _, sys in ipairs(System.func_backrefs[func_name]) do
+        local sys
+        local Sys_backrefs = System.func_backrefs[func_name]
+        for i = 1, Sys_backrefs.len do
+            sys = Sys_backrefs[i]
             if sys.active then
                 sys[func_name](sys, a,b,c,d,e,f)
             end
@@ -85,7 +87,11 @@ do
         ]]
         local sys_list = System.systems
         local sys
-        for _, ent in ipairs(Entity.___remove_set.objects) do
+        local remove_set_objs = Entity.___remove_set.objects
+        local remove_set_len = Entity.___remove_set.size
+
+        for i = 1, remove_set_len do
+            local ent = remove_set_objs[i]
             for index = 1, sys_list.len do
                 sys = sys_list[index]
                 sys:remove(ent)
