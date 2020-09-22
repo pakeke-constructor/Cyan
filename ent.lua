@@ -75,9 +75,17 @@ do
 end
 
 
+local Sys_comp_bits = System.component_bits
+
 local function modmask(ent, comp_name)
     -- modifies byte mask
-    ent.___mask = bit.bor(ent.___mask, System.component_bits[comp_name])
+    ent.___mask = bit.bor(ent.___mask, Sys_comp_bits[comp_name])
+end
+
+local function demodmask(ent, comp_name)
+    ent.___mask = bit.band(
+        ent.___mask, bit.bnot( Sys_comp_bits[comp_name] )
+    )
 end
 
 
@@ -106,7 +114,7 @@ function Entity:has( comp_name )
 
         @return bool @ True if entity has component, else false
     ]]
-    return (rawget(self, comp_name) and true)
+    return ((rawget(self, comp_name) and true) or false)
 end
 
 
@@ -186,6 +194,8 @@ function Entity:remove( comp_name )
         sys:remove(self)
     end
 
+    demodmask(ent, comp_name)
+
     return self
 end
 
@@ -202,6 +212,8 @@ function Entity:rawremove( comp_name )
         @return self
     ]]
     self[comp_name] = nil
+
+    demodmask(ent, comp_name)
 
     return self
 end
