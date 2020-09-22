@@ -75,18 +75,23 @@ do
 end
 
 
+
 local Sys_comp_bits = System.component_bits
+local bit_bnot = bit.bnot
+local bit_bor = bit.bor
+local bit_band = bit.band
 
 local function modmask(ent, comp_name)
     -- modifies byte mask
-    ent.___mask = bit.bor(ent.___mask, Sys_comp_bits[comp_name])
+    ent.___mask = bit_bor(ent.___mask, Sys_comp_bits[comp_name])
 end
 
 local function demodmask(ent, comp_name)
-    ent.___mask = bit.band(
-        ent.___mask, bit.bnot( Sys_comp_bits[comp_name] )
+    ent.___mask = bit_band(
+        ent.___mask, bit_bnot( Sys_comp_bits[comp_name] )
     )
 end
+
 
 
 -- CTOR
