@@ -42,7 +42,10 @@ Cyan.System = System
 Cyan.___depth = 0
 
 do
-    function Cyan.call(func_name,   a,b,c,d,e,f)
+    function Cyan.call(func_name,   a,b,c,d,e,f,g)
+        if g then
+            error("Maximum number of argument exceeded.", 1)
+        end
         if Cyan.___depth == 0 then
             Cyan.flush()
         end
@@ -78,6 +81,9 @@ do
 
 
 
+
+    local non_static_sys_list = System.non_static_systems
+
     -- Flushes all entities that need to be deleted
     function Cyan.flush()
         --[[
@@ -85,24 +91,19 @@ do
 
             @return Cyan@
         ]]
-        local sys_list = System.systems
         local sys
         local remove_set_objs = Entity.___remove_set.objects
         local remove_set_len = Entity.___remove_set.size
 
         for i = 1, remove_set_len do
             local ent = remove_set_objs[i]
-            for index = 1, sys_list.len do
-                sys = sys_list[index]
+            for index = 1, non_static_sys_list.len do
+                sys = non_static_sys_list[index]
                 sys:remove(ent)
             end
         end
     end
 end
-
-
---[[
-]]
 
 
 
