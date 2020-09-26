@@ -157,7 +157,23 @@ Sys:add(entity)
 
 # *Final notes*  (OPTIONAL)
 
-This library is not meant to be used as a barebones library. 
+*Static Systems* are very useful.
+These are just Systems that take no entities, but perform important roles. A common way to use them is to pass the entity in as the first argument through `Cyan.call`.
+
+In this example, an event is emitted after an Entity explodes. The sound system can thus react appropriately, even though it does not take entities.
+```lua
+local SoundSys = Cyan.System()
+
+function SoundSys:explode(ent) -- Called upon   Cyan.call("explode", ent)
+    if ent.size > 30 then
+        love.audio.play( bigExplosionSound )
+    else
+        love.audio.play( smallExplosionSound )
+    end
+end
+```
+
+### This library is not meant to be used as a barebones library. 
 
 The user is expected to add the functionality they want through extra functions, and extra helper tables that they see necessary; minimalism comes at a cost!
 
