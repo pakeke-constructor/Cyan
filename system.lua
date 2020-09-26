@@ -43,7 +43,7 @@ do
         max_shiftnum = 31 -- max is set to lua precision of 32 bit int. :/
     end
 
-    compbitbase_shiftnum = 1 -- number of bit shifts
+    compbitbase_shiftnum = 1 -- number of bit shifts currently
 end
 
 
@@ -71,6 +71,10 @@ do
 
     -- Array that holds all systems   (  arr[-1] = val to add stuff )
     System.systems = array()
+
+    -- Arrays that holds all non-static systems.
+    -- i.e. Systems that take entities.
+    System.non_static_systems = array()
 end
 
 
@@ -86,6 +90,7 @@ local function newComponent(comp_name)
     System.components:add(comp_name)
     -- Checking we haven't reached bit overflow.
     compbitbase_shiftnum = compbitbase_shiftnum + 1
+        
     compbitbase = compbitbase * 2 -- Same as logical bit shift left by 1.
 end
 
@@ -176,6 +181,12 @@ function System:new( ... )--@ALIAS@ System( ... )
 
     -- Adds to system list
     System.systems[-1] = new_sys
+
+    -- Adds to non_static_systems, only if it takes entities.
+    if (#requirement_table > 0) then
+        -- System takes entities -> it is non-static.
+        System.non_static_systems[-1] = new_sys
+    end
 
     return setmetatable(new_sys, System_mt)
 end
