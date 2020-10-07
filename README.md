@@ -196,30 +196,6 @@ addAll(ent,
 })
 ```
 
-What about components? Putting values of components in manually is a bit tedious, don't you think? That can be solved too with a little monkeypatch:
-
-```lua
-local comp_maker = {
-    -- Holds component constructors.
-    pos = function(...)
-        return vec3(...)
-    end
-}
-
-local old_ent_add = Entity.add
-
-function Entity:add(name, ...)
-    old_ent_add(self, name, comp_maker[name](...) )
-end
-
-
-
-ent:add("pos", 1,2,3)
-
-print(ent.pos) ---> vec3( 1, 2, 3 )
-
-```
-
 Just make sure to stick to your conventions, and keep it
 as minimalistic and strict as possible to avoid spagetti.
 No edge cases!
