@@ -5,8 +5,3 @@ As of 22/09/2020, there are no known bugs.
 
 - NOT A BUG ::
 - Make Cyan automatically convert to non-bitop mode when it runs out of integer bits instead of raising error.
-
-
-- NOT A BUG ::
-- For cyan flushing, only remove entities from systems that actually take entities.
-- This way it is impossible for static systems to cause overhead
