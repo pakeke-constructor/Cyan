@@ -90,6 +90,9 @@ end
    
    
 ##  Calling functions / emitting events:
+This feature allows you to call multiple System functions at once, easily. 
+
+The call order depends on when each function was made. (First made, first served)
 ```lua
 --  To call functions in Cyan systems, use
 --  " Cyan.call "
