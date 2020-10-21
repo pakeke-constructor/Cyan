@@ -25,7 +25,8 @@ If you don't, there are plenty of great online resources.
 
 # Entities:
 
-Entities hold data.
+Entities hold data. (components)
+
 They are basically a glorified lua table.
 
 ```lua
@@ -34,8 +35,11 @@ local ent = cyan.Entity()
 
 
 ent:add("position", {x = 1,  y = 2})  -- adds position component.
-                                      -- same as:   ent.position = {x = 1, y = 2}
-                                      -- (note: components do not have to be tables)
+
+-- Same as above:
+ent.position = { x = 1, y = 2 }
+
+-- (note: components do not have to be tables)
 
 
 ent:remove("position") -- removes component 'position'
