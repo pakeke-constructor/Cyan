@@ -45,7 +45,7 @@ ent.position = { x = 1, y = 2 }
 ent:remove("position") -- removes component 'position'
 
 
--- Marks entity for deletion (will be deleted next frame)
+-- Marks entity for deletion (will be deleted next Cyan.flush() )
 ent:delete()
 
 ```
