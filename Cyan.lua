@@ -39,17 +39,21 @@ Cyan.System = System
 
 -- Depth is the call depth of a Cyan.call function.
 -- It tracks the `depth` of the call so automatic flushing can be done on every root call.
-Cyan.___depth = 0
+local ___depth = 0
+local func_backrefs = System.func_backrefs
 
 do
-    function Cyan.call(func_name,   a,b,c,d,e,f,g)
-        if g then
-            error("Maximum number of argument exceeded.", 1)
+    function Cyan.call(func_name,   a,b,c,d,e,f,g,h,i__)
+
+        if i__ then
+            -- THIS IS ONLY FOR DEBUGGING!!!! remove upon release !!!!
+            error("Maximum number of arguments exceeded.")
         end
-        if Cyan.___depth == 0 then
+        
+        if ___depth == 0 then
             Cyan.flush()
         end
-        Cyan.___depth = Cyan.___depth + 1
+        ___depth = ___depth + 1
         --[[
             Calls all systems with the given function. Alias: Cyan.emit
 
@@ -64,25 +68,26 @@ do
             @return Cyan @
         ]]
         local sys
-        local Sys_backrefs = System.func_backrefs[func_name]
+        local Sys_backrefs = func_backrefs[func_name]
         for i = 1, Sys_backrefs.len do
             sys = Sys_backrefs[i]
             if sys.active then
-                sys[func_name](sys, a,b,c,d,e,f)
+                sys[func_name](sys, a,b,c,d,e,f,g,h)
             end
         end
 
-        Cyan.___depth = Cyan.___depth - 1 -- Depth will be zero if and ONLY IF this call was a root call. (ie called from love.update or love.draw)
-
-        return Cyan
+        ___depth = ___depth - 1 -- Depth will be zero if and ONLY IF this call was a root call. (ie called from love.update or love.draw)
     end
 
     Cyan.emit = Cyan.call
 
 
 
-
     local non_static_sys_list = System.non_static_systems
+
+    -- set of all entities
+    local ___all = Entity.___all
+
 
     -- Flushes all entities that need to be deleted
     function Cyan.flush()
@@ -97,11 +102,20 @@ do
 
         for i = 1, remove_set_len do
             local ent = remove_set_objs[i]
+            
+            -- The set of ALL entities
+            ___all:remove(ent)
+
             for index = 1, non_static_sys_list.len do
                 sys = non_static_sys_list[index]
                 sys:remove(ent)
             end
         end
+    end
+
+    function Cyan.exists( entity )
+        -- checks whether an entity exists, or if it has been deleted.
+        return ___all:has(entity)
     end
 end
 
