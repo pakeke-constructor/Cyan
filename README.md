@@ -1,8 +1,17 @@
 
 
+# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
+
+# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
+
+# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
+
+# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
+
+# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
+
 
 # Cyan
-#### As of 22/09/2020, this library has no known bugs.
 
 Cyan is a lightweight ECS library built for lua, inspired from Concord and other ECS libs.
 
