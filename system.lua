@@ -44,6 +44,7 @@ do
     end
 
     compbitbase_shiftnum = 1 -- number of bit shifts currently
+                             -- (We start at 1 and cap at 31 for safety)
 end
 
 
@@ -131,7 +132,7 @@ local System_mt = {
         end
     end
     ;
-    -- Defend metatable
+    -- safety first
     __metatable = "Defended metatable"
 }
 
@@ -229,9 +230,8 @@ function System:has( ent )
 
         @return bool @ True if system has the entity, nil otherwise
     ]]
-    return (self.___group:has(ent) and true)
+    return self.___group:has(ent)
 end
-
 
 
 
@@ -291,6 +291,14 @@ function System:deactivate( )
     return self
 end
 
+
+
+
+function System:clear()
+    for _, e in ipairs(self.group)do
+        self:remove(e)
+    end
+end
 
 
 

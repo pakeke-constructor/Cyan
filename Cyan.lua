@@ -42,17 +42,15 @@ Cyan.System = System
 local ___depth = 0
 local func_backrefs = System.func_backrefs
 
-do
-    function Cyan.call(func_name,   a,b,c,d,e,f,g,h,i__)
 
-        if i__ then
-            -- THIS IS ONLY FOR DEBUGGING!!!! remove upon release !!!!
-            error("Maximum number of arguments exceeded.")
-        end
-        
-        if ___depth == 0 then
+
+do
+    function Cyan.call(func_name, ...)
+        if ___depth <= 0 then
             Cyan.flush()
+            ___depth = 0
         end
+
         ___depth = ___depth + 1
         --[[
             Calls all systems with the given function. Alias: Cyan.emit
@@ -72,7 +70,7 @@ do
         for i = 1, Sys_backrefs.len do
             sys = Sys_backrefs[i]
             if sys.active then
-                sys[func_name](sys, a,b,c,d,e,f,g,h)
+                sys[func_name](sys, ...)
             end
         end
 
@@ -116,6 +114,15 @@ do
     function Cyan.exists( entity )
         -- checks whether an entity exists, or if it has been deleted.
         return ___all:has(entity)
+    end
+
+    function Cyan.clear()
+        --[[
+            Clears all entities
+        ]]
+        for _,e in ipairs(___all.objects) do
+            e:delete( )
+        end
     end
 end
 

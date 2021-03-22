@@ -1,19 +1,9 @@
 
 
-# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
-
-# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
-
-# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
-
-# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
-
-# THERE IS A BIG BUG I HAVENT FIXED YET, DONT USE THIS
-
 
 # Cyan
 
-Cyan is a lightweight ECS library built for lua, inspired from Concord and other ECS libs.
+Cyan is a lightweight ECS library built for LOVE.
 
 It is designed to have a very minimalistic and intuitive API whilst having time complexities among the best ECS libaries out there.
 
@@ -25,17 +15,16 @@ I mainly built this for personal use. Check out Concord, Nata, or HOOECS if you 
 ```lua
 
 -- importing:
-local cyan = require "(path to cyan folder).Cyan"
+local cyan = require "(path to cyan folder).Cyan.cyan"
 
 ```
 
 This tutorial assumes you know the basics of ECS.
 If you don't, there are plenty of great online resources.
 
-# Entities:
+### Entities:
 
-Entities hold data. (components)
-
+Entities hold data.
 They are basically a glorified lua table.
 
 ```lua
@@ -43,25 +32,26 @@ They are basically a glorified lua table.
 local ent = cyan.Entity()
 
 
-ent:add("position", {x = 1,  y = 2})  -- adds position component.
+ent.position = { x=10, y=10 } -- adds "position" component
 
--- Same as above:
-ent.position = { x = 1, y = 2 }
-
--- (note: components do not have to be tables)
+                        -- same as ent:add("position", {x=10, y=10})
 
 
-ent:remove("position") -- removes component 'position'
+-- components don't have to be tables:
+ent.health = 50
 
 
--- Marks entity for deletion (will be deleted next frame.)
+ent:remove("health") -- removes component 'health'
+
+
+-- Marks entity for deletion (will be deleted next frame)
 ent:delete()
 
 ```
  
  
       
-# Systems:
+### Systems:
 Systems is where logic is held.
 It is also where the entities belong.
 
@@ -76,36 +66,29 @@ local DrawSys = cyan.System( "image", "position" )
 
 
 -- Access system entities using `System.group`.
--- This table is read only!!! Do NOT modify it!
 -- Example:
 function DrawSys:draw()
-    for _, ent in ipairs(self.group) do -- iterates over all entities in `DrawSys`
-        draw( ent )
+    for _, ent in ipairs(self.group) do -- iterates over all entities
+        love.graphics.draw(ent.image, ent.position.x, ent.position.y)
     end
 end
 
 
-```
-There are also callbacks for entities being added and removed from systems,
-called :added and :removed. The entity is the first argument
-```lua
-function DrawSys:added( entity )
-  ImageBatch:add( entity )
+
+-- Another example
+function DrawSys:update(dt)
+    for _, ent in ipairs(self.group) do
+        -- Do something to do with entity Z indexing or something, idk
+    end
 end
 
 
-function DrawSys:removed( entity )
-  ImageBatch:remove( entity )
-end
 
 ```
  
    
    
-##  Calling functions / emitting events:
-This feature allows you to call multiple System functions at once, easily. 
-
-The call order depends on when each function was made. (First made, first served)
+###  Calling system functions
 ```lua
 --  To call functions in Cyan systems, use
 --  " Cyan.call "
@@ -128,7 +111,7 @@ end
 
 ```
 
-# Other functions:  (OPTIONAL)
+# Optional ease of use:
 Here are some tips that provide extra functionality, but are
 entirely optional.
    
@@ -169,27 +152,15 @@ Sys:add(entity)
 -- This is done automatically, so it doesn't really need to be done.
 
 
+
+Cyan.exists(ent)
+-- returns true if the entity exists, false otherwise
+
 ```
 
-# *Final notes*  (OPTIONAL)
+# *Final notes*
 
-*Static Systems* are very useful.
-These are just Systems that take no entities, but perform important roles. A common way to use them is to pass the entity in as the first argument through `Cyan.call`.
-
-In this example, an event is emitted after an Entity explodes. The sound system can thus react appropriately, even though it does not take entities.
-```lua
-local SoundSys = Cyan.System()
-
-function SoundSys:explode(ent) -- Called upon   Cyan.call("explode", ent)
-    if ent.size > 30 then
-        love.audio.play( bigExplosionSound )
-    else
-        love.audio.play( smallExplosionSound )
-    end
-end
-```
-
-### This library is not meant to be used as a barebones library. 
+This library is not meant to be used as a barebones library. 
 
 The user is expected to add the functionality they want through extra functions, and extra helper tables that they see necessary; minimalism comes at a cost!
 
@@ -210,6 +181,30 @@ addAll(ent,
     max_health = 100;
     image = love.graphics.newImage("monkey.png")
 })
+```
+
+What about components? Putting values of components in manually is a bit tedious, don't you think? That can be solved too with a little monkeypatch:
+
+```lua
+local comp_maker = {
+    -- Holds component constructors.
+    pos = function(...)
+        return vec3(...)
+    end
+}
+
+local old_ent_add = Entity.add
+
+function Entity:add(name, ...)
+    old_ent_add(self, name, comp_maker[name](...) )
+end
+
+
+
+ent:add("pos", 1,2,3)
+
+print(ent.pos) ---> vec3( 1, 2, 3 )
+
 ```
 
 Just make sure to stick to your conventions, and keep it
