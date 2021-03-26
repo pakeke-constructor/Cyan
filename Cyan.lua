@@ -86,6 +86,8 @@ do
     -- set of all entities
     local ___all = Entity.___all
 
+    -- flag to ensure that Cyan.flush() isnt accidentally called recursively
+    local is_flush_running = false
 
     -- Flushes all entities that need to be deleted
     function Cyan.flush()
@@ -94,9 +96,15 @@ do
 
             @return Cyan@
         ]]
+        if is_flush_running then
+            return
+        end
+        is_flush_running = true
+
         local sys
-        local remove_set_objs = Entity.___remove_set.objects
-        local remove_set_len = Entity.___remove_set.size
+        local remove_set = Entity.___remove_set
+        local remove_set_objs = remove_set.objects
+        local remove_set_len = remove_set.size
 
         for i = 1, remove_set_len do
             local ent = remove_set_objs[i]
@@ -109,6 +117,10 @@ do
                 sys:remove(ent)
             end
         end
+
+        remove_set:clear()
+
+        is_flush_running = false
     end
 
     function Cyan.exists( entity )
