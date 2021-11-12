@@ -68,7 +68,7 @@ local DrawSys = cyan.System( "image", "position" )
 -- Access system entities using `System.group`.
 -- Example:
 function DrawSys:draw()
-    for _, ent in ipairs(self.group) do -- iterates over all entities
+    for _, ent in ipairs(self.group) do -- iterates over all entities with .position and .image
         love.graphics.draw(ent.image, ent.position.x, ent.position.y)
     end
 end
